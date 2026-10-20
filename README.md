@@ -109,6 +109,10 @@ See `SDLC_FACTORY.md` for the broader architecture and milestone contracts.
 python -m unittest discover -s tests -v
 ```
 
+GitHub Actions runs the same suite on pull requests targeting `main`, pushes to `main`, and manual requests. The `Tests` workflow covers Linux with Python 3.11 and 3.14, plus Windows with Python 3.14. Open a pull request's **Checks** tab to inspect each job and its test output. These runs use no model credentials or external model calls.
+
+To inspect the workflow, see `.github/workflows/tests.yml`. Passing checks become mandatory for merging only after the corresponding branch protection or ruleset is configured.
+
 The suite exercises real temporary Git repositories and check commands, failure-driven repair, independent review rejection, commit-specific approval, target movement, interrupted stage recovery, uncertain merge outcomes, idempotency, cancellation, edit boundaries, HTTP authentication, and provider request/response formats. It makes no external model calls.
 
 Provider references: [OpenAI Chat API](https://developers.openai.com/api/reference/resources/chat), [Claude Messages API](https://platform.claude.com/docs/en/api/messages/create), [Claude API authentication](https://platform.claude.com/docs/en/api/overview).
