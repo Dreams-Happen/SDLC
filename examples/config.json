@@ -1,0 +1,49 @@
+{
+  "providers": {
+    "builder": {
+      "kind": "openai-compatible",
+      "base_url": "https://api.openai.com/v1",
+      "api_key_env": "OPENAI_API_KEY",
+      "model": "REPLACE_WITH_YOUR_BUILD_MODEL",
+      "max_tokens": 8192,
+      "timeout_seconds": 120,
+      "token_parameter": "max_completion_tokens"
+    },
+    "reviewer": {
+      "kind": "anthropic",
+      "base_url": "https://api.anthropic.com/v1",
+      "api_key_env": "ANTHROPIC_API_KEY",
+      "model": "REPLACE_WITH_YOUR_REVIEW_MODEL",
+      "max_tokens": 8192,
+      "timeout_seconds": 120
+    }
+  },
+  "routes": {
+    "scope": "reviewer",
+    "plan": "builder",
+    "build": "builder",
+    "repair": "builder",
+    "review": "reviewer"
+  },
+  "repositories": {
+    "my-project": {
+      "source": "C:/path/to/my-project.git",
+      "branch": "main",
+      "merge": "manual",
+      "allowed_paths": ["src/*", "tests/*"],
+      "protected_paths": [".github/*", "pyproject.toml"],
+      "checks": [
+        {
+          "name": "unit",
+          "argv": ["{python}", "-m", "unittest", "discover", "-s", "tests"],
+          "timeout_seconds": 120
+        }
+      ]
+    }
+  },
+  "budgets": {
+    "repair_attempts": 3,
+    "model_calls": 20,
+    "active_seconds": 1800
+  }
+}

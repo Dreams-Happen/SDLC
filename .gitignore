@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+.factory/
+.env
+.env.*
+secrets.txt
+factory.local.json
+
